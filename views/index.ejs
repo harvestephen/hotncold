@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/styles/app.css" >
+    <title>HotnCold - Home</title>
 </head>
 <body>
+
     <h1>HotnCold</h1>
-    <button>Add Work!</button>
     <br><br>
     <table>
+
+        <% if (Item){ %>
+        
+        <%Item.forEach( function(data){ %>
         <tr>
-            <th>ID</th>
             <th>Work</th>
         </tr>
         <tr>
-            <td>1</td>
             <td>
-                Wash the dishes. 
-                <button>edit</button>
-                <button>delete</button>
+                <%= data.Item; %>
+                <form action="/users/<%= data.id; %>">
+                    <input id="<%= data.id; %>" name="updateItem" class="hidden trig" type="text"/>
+                    <button id="<%= data.id; %>" class="hidden trig" type="submit" formmethod="POST" formaction="/users/update/<%= data.id; %>">update</button>
+                    <button id="`.toggle-${id}`" class="toggle" type="button" onclick="showShowables(`<%= data.id; %>`);">edit</button>
+                    <button type="submit" formmethod="POST">delete</button>
+                </form>
             </td>
         </tr>
-    </table>
+        <% })} %>
 
-    
+    </table>
 
     <form action="/users" method="POST">
         <label>New Work:
@@ -33,6 +40,6 @@
         <button type="submit">POST me!</button>
     </form>
 
-    <script src="./scripts/scripts.js"></script>
+    <script src="/scripts/scripts.js"></script>
 </body>
 </html>

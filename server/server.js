@@ -4,6 +4,7 @@ const workRouter = require('../routes/work.route');
 
 //define middlewares
 app.use( express.urlencoded( { extended: true } ) );
+app.use(express.static('static'));
 
 //define view engine
 app.set("view engine", "ejs");

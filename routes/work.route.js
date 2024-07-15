@@ -2,22 +2,17 @@ const express = require('express');
 const router = express.Router();
 const db = require("../config/db");
 
+//Http Controllers
+const selectQuery = require('../controllers/workSelectController');
+const addQuery = require('../controllers/workAddController');
+const deleteQuery = require('../controllers/workDeleteController');
+const updateQuery = require('../controllers/workUpdateController');
 
 //Routes to handle HTTP Requests
-router.get('/', (req, res) => {
-    db.query(`SELECT * FROM Items`, (err, result) => {
-        console.log(result);
-        res.render("index", { item: result});
-    });
-    
-});
-
-router.post('/', (req, res) => {
-    db.query(`INSERT INTO Items (Item) VALUES ("${req.body.item}")`, (err) => {
-        console.log(err);
-    });
-    res.render("index", { item: `:: ${req.body.item} ::` });
-});
+router.get('/', selectQuery.getAllUsers)
+router.post('/', addQuery.addWork);
+router.post('/:id', deleteQuery.deleteWork);
+router.post('/update/:id',updateQuery.updateWork );
 
 
 module.exports = router;
