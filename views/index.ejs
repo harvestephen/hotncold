@@ -21,11 +21,11 @@
         <tr>
             <td>
                 <%= data.Item; %>
-                <form action="/users/<%= data.id; %>">
+                <form action="/<%= data.id; %>">
                     <input id="<%= data.id; %>" name="updateItem" class="hidden trig" type="text"/>
-                    <button id="<%= data.id; %>" class="hidden trig" type="submit" formmethod="POST" formaction="/users/update/<%= data.id; %>">update</button>
+                    <button id="<%= data.id; %>" class="hidden trig" type="submit" formmethod="POST" formaction="/update/<%= data.id; %>">update</button>
                     <button id="`.toggle-${id}`" class="toggle" type="button" onclick="showShowables(`<%= data.id; %>`);">edit</button>
-                    <button type="submit" formmethod="POST">delete</button>
+                    <button type="submit" formmethod="POST" formaction="/delete/<%= data.id; %>">delete</button>
                 </form>
             </td>
         </tr>
@@ -33,13 +33,18 @@
 
     </table>
 
-    <form action="/users" method="POST">
+    <form action="/add" method="POST">
         <label>New Work:
             <input type="text" name="item" />
         </label>
         <button type="submit">POST me!</button>
+
+        <button type="submit" formaction="/logout">logout</button>
     </form>
 
     <script src="/scripts/scripts.js"></script>
+
+
+
 </body>
 </html>

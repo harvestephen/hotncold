@@ -9,13 +9,12 @@ exports.updateWork = (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            db.query(`SELECT * FROM Items`, (err, results) => {
-                if (err){
-                    console.log(err);
-                } else {
-                    res.render('index', { Item: results });
+            db.query(`SELECT * FROM Items WHERE userid = ${req.session.userId}`, (err, results) => {
+                if (err) {
+                  return res.status(500).send(err);
                 }
-            });
+                res.render('index', { Item: results });
+              })
         }
     });
 }
