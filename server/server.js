@@ -22,6 +22,8 @@ app.set("view engine", "ejs");
 //define routers
 app.use('/', workRouter);
 
-app.listen(8081, () => {
-    console.log("listening...");
+const PORT = 8081;
+
+app.listen(PORT, () => {
+    console.log(`Listening to ${PORT}`);
 });

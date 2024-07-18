@@ -1,3 +1,57 @@
-.hidden {
-    display: none;
+@media (max-width: 1900px) {
+  .overflow {
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100px !important;
+    text-overflow: ellipsis;
+  }
+}
+body {
+  background-color: #121212 !important;
+}
+.overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100px;
+  text-overflow: ellipsis;
+}
+.hiddenss {
+  display: none !important;
+}
+.card {
+  background-color: #1e1e1e !important;
+  border: none !important;
+}
+.form-control {
+  background-color: #333 !important;
+  border: 1px solid #444 !important;
+  color: #e0e0e0 !important;
+}
+.form-control:focus {
+  background-color: #333 !important;
+  border-color: #00bcd4 !important;
+  color: #e0e0e0 !important;
+}
+.btn-primary {
+  background-color: #00bcd4 !important;
+  border-color: #00bcd4 !important;
+}
+.btn-primary:hover {
+  background-color: #00acc1 !important;
+  border-color: #00acc1 !important;
+}
+a {
+  color: #00bcd4 !important;
+}
+a:hover {
+  color: #00acc1 !important;
+}
+.form-control::placeholder {
+  color: white !important;
+  opacity: 1;
+}
+.input-group-text {
+  color: white !important;
+  background-color: #333 !important;
+  border-color: rgb(71, 71, 71) !important;
 }

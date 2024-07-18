@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
+//route middlewares
 function isLoggedIn(req, res, next) {
     if (req.session.userId) {
         next();
@@ -9,7 +10,6 @@ function isLoggedIn(req, res, next) {
         res.redirect('/login');
     }
 }
-
 
 //Http Controllers
 const selectQuery = require('../controllers/workSelectController');
@@ -20,6 +20,8 @@ const login = require('../controllers/userLoginController');
 const newComer = require('../controllers/newComersController');
 const logoutUser = require('../controllers/logoutController');
 const getLogin = require('../controllers/getLoginController');
+const getSignup = require('../controllers/getSignupController');
+const signUp = require('../controllers/userSignupController');
 
 //Routes to handle HTTP Requests
 router.get('/', newComer.redirect)
@@ -30,7 +32,8 @@ router.post('/update/:id', isLoggedIn, updateQuery.updateWork );
 router.post('/logout', isLoggedIn, logoutUser.logout);
 router.post('/login-', login.userLogin);
 router.get('/login', getLogin.getLoginPage);
-router.get('/signup');
+router.post('/signup-', signUp.signUp);
+router.get('/signup', getSignup.getSignup);
 
 
 module.exports = router;
