@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const workRouter = require('../routes/work.route');
+const workRouter = require('./routes/work.route');
 const session = require('express-session');
 
 //define middlewares
@@ -18,6 +18,7 @@ app.use(session({
 
 //define view engine
 app.set("view engine", "ejs");
+app.set('views','views');
 
 //define routers
 app.use('/', workRouter);
