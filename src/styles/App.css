@@ -1,0 +1,29 @@
+@font-face {
+  font-family: inter;
+  src:url('../assets/fonts/Inter_18pt-Regular.ttf')format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: inter-bold;
+  src:url('../assets/fonts/Inter_28pt-Bold.ttf')format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+}
+body {
+  background-image: url('../assets/images/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+p {
+  font-family: inter;
+}
+#banner {
+  font-family: inter-bold;
+}
