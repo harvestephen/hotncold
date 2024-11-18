@@ -1,8 +1,12 @@
 import Calendars from "./Calendars";
+import { SignupModal, RegisterModal } from "./Components";
 
 export default function Content() {
   return (
     <>
+      {/**
+      <SignupModal />
+      */}
       <div className="max-w-full flex items-center flex-col mx-8">
         {/**Button */}
         <div className="flex gap-3 max-w-[100rem] w-full mx-8 my-8">
