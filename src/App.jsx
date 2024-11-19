@@ -1,12 +1,16 @@
 import { 
   Titlebar,
   Topbar,
-  Content
+  Content,
+  AlertModal
  } from "./components/Components"
 
 function App() {
+
   return (
     <>
+      {/**<AlertModal />*/}
+      
       <Topbar />
       <Titlebar />
       <Content />

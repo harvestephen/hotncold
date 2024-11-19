@@ -4,3 +4,4 @@ export {default as Content} from './Content';
 export {default as SignupModal} from './SignupModal';
 export {default as RegisterModal} from './RegisterModal';
 export {default as AlertModal} from './AlertModal';
+export {default as AddtaskModal} from './AddtaskModal';

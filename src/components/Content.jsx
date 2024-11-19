@@ -1,12 +1,27 @@
+import { useState } from "react";
 import Calendars from "./Calendars";
-import { SignupModal, RegisterModal } from "./Components";
+import { AddtaskModal } from "./Components";
+import $ from "jquery";
 
 export default function Content() {
+  const [Addmodal, setAddModal] = useState(false);
+
+  const addHandler = () => {
+    if (Addmodal === false) {
+      $("#addModal").fadeIn(300);
+      setAddModal(true);
+    }
+  };
+  const cancelAddHandler = () => {
+    $("#addModal").fadeOut(300);
+    setAddModal(false);
+  };
+
   return (
     <>
-      {/**
-      <SignupModal />
-      */}
+      <div className="hidden" id="addModal">
+        <AddtaskModal onCancel={cancelAddHandler} />
+      </div>
       <div className="max-w-full flex items-center flex-col mx-8">
         {/**Button */}
         <div className="flex gap-3 max-w-[100rem] w-full mx-8 my-8">
@@ -27,7 +42,10 @@ export default function Content() {
               <div className="flex justify-between max-w-[100rem] w-full">
                 <div className="flex items-center gap-2">
                   <input type="checkbox" className="ml-2" /> All
-                  <button className="bg-[#D9D9D9] mx-4 py-1 px-3 rounded-sm drop-shadow-lg font-bold">
+                  <button
+                    className="bg-[#D9D9D9] mx-4 py-1 px-3 rounded-sm drop-shadow-lg font-bold"
+                    onClick={addHandler}
+                  >
                     Add
                   </button>
                 </div>
