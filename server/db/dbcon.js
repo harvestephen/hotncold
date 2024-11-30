@@ -1,4 +1,4 @@
-const MYSQL = require('mysql2');
+import MYSQL from 'mysql2';
 const CONNECTION = MYSQL.createConnection({
   host: 'localhost',
   user: 'root',
@@ -6,4 +6,4 @@ const CONNECTION = MYSQL.createConnection({
   database: 'mydb'
 });
 
-module.exports = CONNECTION;
+export default CONNECTION;

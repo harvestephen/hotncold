@@ -1,0 +1,7 @@
+{
+  "exec": "node ./server/app.js",  
+  "ext": "js,ts",           
+  "ignore": ["./node_modules/*", "./dist/*"],  
+  "watch": ["./server", "./src"],
+  "legacy-watch": true
+}

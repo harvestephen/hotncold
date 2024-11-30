@@ -2,6 +2,8 @@
   "name": "hotncold",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
+  
   "scripts": {
     "dev": "vite",
     "dev:nodemon": "nodemon ./server/app",

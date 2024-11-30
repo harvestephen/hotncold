@@ -1,9 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Calendars from "./Calendars";
 import { AddtaskModal } from "./Components";
 import $ from "jquery";
 
 export default function Content() {
+useEffect(()=>{
+  fetch('http://localhost:3000/getItems', {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "GET",
+    mode: "cors"
+  })
+  .then(response => {
+    return response.json();
+  })
+  .then(data => console.log(data));
+  
+}, []);
+
   const [Addmodal, setAddModal] = useState(false);
 
   const addHandler = () => {
@@ -19,6 +34,7 @@ export default function Content() {
 
   return (
     <>
+    
       <div className="hidden" id="addModal">
         <AddtaskModal onCancel={cancelAddHandler} />
       </div>
