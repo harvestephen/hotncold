@@ -5,11 +5,11 @@ import $ from "jquery";
 
 export default function Content() {
 useEffect(()=>{
-  fetch('http://localhost:3000/getItems', {
+  fetch('/api/getItems', {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "GET",
+    method: "GET", 
     mode: "cors"
   })
   .then(response => {
@@ -34,7 +34,6 @@ useEffect(()=>{
 
   return (
     <>
-    
       <div className="hidden" id="addModal">
         <AddtaskModal onCancel={cancelAddHandler} />
       </div>

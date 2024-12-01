@@ -1,5 +1,5 @@
 import MYSQL from 'mysql2';
-const CONNECTION = MYSQL.createConnection({
+const CONNECTION = MYSQL.createPool({
   host: 'localhost',
   user: 'root',
   password: 'admin',

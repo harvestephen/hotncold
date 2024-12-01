@@ -24,7 +24,7 @@ DB.query('SHOW TABLES LIKE "users"', (err, result) => {
 });
 
 // HTTP HANDLERS
-APP.get('/getItems', (req, res) => {
+APP.get('/api/getItems', (req, res) => {
   const data = {
     name: "Harvey",
     age: 22,

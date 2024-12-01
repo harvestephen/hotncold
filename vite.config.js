@@ -7,6 +7,13 @@ export default defineConfig({
   server: {
     watch: {
       ignored: ['**/node_modules/**', '**/dist/**']
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        secure: false
+      }
     }
   }
 })
