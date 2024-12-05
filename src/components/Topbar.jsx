@@ -33,6 +33,7 @@ export default function Topbar() {
         <RegisterModal
           onCancel={registerCancelHandler}
           onSignUp={handlerSignUp}
+
         />
       </div>
 

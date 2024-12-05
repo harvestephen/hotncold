@@ -34,6 +34,7 @@ useEffect(()=>{
 
   return (
     <>
+      
       <div className="hidden" id="addModal">
         <AddtaskModal onCancel={cancelAddHandler} />
       </div>
