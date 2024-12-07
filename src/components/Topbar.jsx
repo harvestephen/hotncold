@@ -3,6 +3,35 @@ import { SignupModal, RegisterModal } from "./Components";
 import $ from "jquery";
 
 export default function Topbar() {
+
+  //Set login to true
+  async function setLogIn() {
+    fetch("/api/log", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({logStatus: true}),
+    })
+    .then((res) =>{
+      if (!res.ok) {console.log("Fetch Error...")} 
+    });
+  }
+
+  //set login to false
+  async function setLogOut() {
+    fetch("/api/log", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({logStatus: false}),
+    })
+    .then((res) =>{
+      if (!res.ok) {console.log("Fetch Error...")} 
+    });
+  }
+
   function signUpCancelHandler() {
     $("#sign-up").fadeOut(300);
   }

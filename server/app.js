@@ -40,14 +40,6 @@ DB.query('SHOW TABLES LIKE "users"', (err, result) => {
 });
 
 // HTTP HANDLERS
-APP.get('/api/getItems', (req, res) => {
-  const data = {
-    name: "Harvey",
-    age: 22,
-    profession: "Software Developer"
-  }
-  res.json(data);
-});
 APP.post('/api/register', (req, res) => {
   const formData = req.body;
   const username = formData.username;

@@ -4,20 +4,6 @@ import { AddtaskModal } from "./Components";
 import $ from "jquery";
 
 export default function Content() {
-useEffect(()=>{
-  fetch('/api/getItems', {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "GET", 
-    mode: "cors"
-  })
-  .then(response => {
-    return response.json();
-  })
-  .then(data => console.log(data));
-  
-}, []);
 
   const [Addmodal, setAddModal] = useState(false);
 

@@ -1,26 +1,19 @@
 import { Titlebar, Topbar, Content, AlertModal } from "./components/Components";
+import checkLog from "./scripts/checkLog";
+import { useEffect } from "react";
 
 function App() {
-  async function getLog() {
-    await fetch("/api/is-log", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-      mode: "cors",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => console.log(`Logged Status: ${data.logStatus}`));
+  async function log() {
+    const data = await checkLog();
+    const isLogged = await data.logStatus;
+    return isLogged;
   }
-
-  getLog();
+  const logStatus = log();
 
   return (
     <>
       {/**<AlertModal />*/}
-      <Topbar />
+      <Topbar isLogged={logStatus} />
       <Titlebar />
       <Content />
     </>
