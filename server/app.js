@@ -148,7 +148,8 @@ APP.post('/api/sign-up', (req, res) => {
 
     DB.query('SELECT * FROM tasks WHERE user_id = ?', [result[0].id], (err, res) => {
       if (err) console.log(err);
-      console.log(res[0])
+      console.log(res[0]);
+      changeLog(true);
     });
 
   });
