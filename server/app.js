@@ -7,12 +7,19 @@ import { dirname } from "path";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-console.log(__dirname + "/db/dbcon.js");
-
 const APP = EXPRESS();
 const PORT = 3000;
 
 let isLoggedIn = false;
+let currentUser = {
+  id: 1,
+  name: "Michael"
+};
+
+function changeUser(id, name){
+  currentUser.name = name;
+  currentUser.id = id;
+}
 
 function changeLog(arg) {
   isLoggedIn = arg;
@@ -30,13 +37,16 @@ DB.query('SHOW TABLES LIKE "users"', (err, result) => {
   if (err) console.log(err);
   if (result.length === 0) {
     DB.query(
-      "CREATE TABLE users ( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100) NOT NULL, password VARCHAR(100) )",
+      "CREATE TABLE users( id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100) NOT NULL, password VARCHAR(100) )",
       (err) => {
         if (err) console.log(err);
         console.log("No Tables yet: Initiating Tables...");
-        console.log("Tables Successfully Initiated...");
       }
     );
+    DB.query("CREATE TABLE tasks (task_id INT PRIMARY KEY AUTO_INCREMENT,due_date DATE ,task VARCHAR(500) NOT NULL, user_id INT, FOREIGN KEY(user_id) REFERENCES users(id))", (err) => {
+      if (err) console.log(err);
+      console.log("Tables Successfully Initiated...");
+    });
   } else {
     console.log("Tables Loaded Successfully...");
   }
@@ -110,6 +120,39 @@ APP.post("/api/log", (req, res) => {
   const data = req.body;
   changeLog(data.logStatus);
   res.status(200).json({ message: "Registration successful!" });
+});
+
+//send new task to database
+APP.post('/api/add-task', (req, res) => {
+  const query = "INSERT INTO tasks (task, user_id, due_date) VALUES (?, ?, ?)";
+  DB.query(query, [req.body.task, currentUser.id, req.body.dueDate], (err) => {
+    if (err) console.log(err);
+  });
+  res.status(200).json({});
+})
+
+//sign-up to current user
+APP.post('/api/sign-up', (req, res) => {
+
+  const userName = req.body.user;
+  const password = req.body.password;
+
+  DB.query('SELECT * FROM users WHERE name = ? AND password = ?', [userName, password], (err, result) => {
+    if (err) console.log(err);
+    if (result.length > 0) {
+      changeUser(result[0].id, result[0].name);
+      console.log(currentUser);
+    } else {
+      console.log("no username detected...");
+    }
+
+    DB.query('SELECT * FROM tasks WHERE user_id = ?', [result[0].id], (err, res) => {
+      if (err) console.log(err);
+      console.log(res[0])
+    });
+
+  });
+
 });
 
 APP.listen(PORT, () => {

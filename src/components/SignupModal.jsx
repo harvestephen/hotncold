@@ -1,6 +1,7 @@
 import $ from "jquery";
 
 function SignupModal({ onCancel, registerHandler }) {
+
   async function checkUsers(event) {
     event.preventDefault();
     //get form data
@@ -31,10 +32,30 @@ function SignupModal({ onCancel, registerHandler }) {
     })
   }
 
+  async function signUp(event) {
+    event.preventDefault();
+    const formData = $("#form-signup").serializeArray();
+    const data = {
+      user: formData[0].value,
+      password: formData[1].value
+    }
+    
+    //send data to backend
+    fetch('/api/sign-up', {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: 'POST',
+      mode: 'cors',
+      body: JSON.stringify(data)
+    });
+  }
+
   return (
     <>
       <div className="absolute w-full h-full flex justify-center items-center ">
         <form
+          onSubmit={signUp}
           id="form-signup"
           className="bg-[#D9D9D9] p-4 rounded-lg drop-shadow-xl relative bottom-20 border-[1px] border-black"
         >
@@ -58,7 +79,6 @@ function SignupModal({ onCancel, registerHandler }) {
           <div className="flex justify-around mt-4">
             <button
               className="bg-[#B6CFCF] px-2 rounded-full border-[1px] border-black"
-              onClick={checkUsers}
             >
               Submit
             </button>
