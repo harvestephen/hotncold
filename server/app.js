@@ -12,13 +12,15 @@ const PORT = 3000;
 
 let isLoggedIn = false;
 let currentUser = {
-  id: 1,
-  name: "Michael"
+  id: undefined,
+  name: "",
+  task: [],
 };
 
-function changeUser(id, name){
+function changeUser(id, name, task) {
   currentUser.name = name;
   currentUser.id = id;
+  currentUser.task = task;
 }
 
 function changeLog(arg) {
@@ -43,10 +45,13 @@ DB.query('SHOW TABLES LIKE "users"', (err, result) => {
         console.log("No Tables yet: Initiating Tables...");
       }
     );
-    DB.query("CREATE TABLE tasks (task_id INT PRIMARY KEY AUTO_INCREMENT,due_date DATE ,task VARCHAR(500) NOT NULL, user_id INT, FOREIGN KEY(user_id) REFERENCES users(id))", (err) => {
-      if (err) console.log(err);
-      console.log("Tables Successfully Initiated...");
-    });
+    DB.query(
+      "CREATE TABLE tasks (task_id INT PRIMARY KEY AUTO_INCREMENT,due_date DATE ,task VARCHAR(500) NOT NULL, user_id INT, FOREIGN KEY(user_id) REFERENCES users(id))",
+      (err) => {
+        if (err) console.log(err);
+        console.log("Tables Successfully Initiated...");
+      }
+    );
   } else {
     console.log("Tables Loaded Successfully...");
   }
@@ -119,43 +124,78 @@ APP.get("/api/is-log", (req, res) => {
 APP.post("/api/log", (req, res) => {
   const data = req.body;
   changeLog(data.logStatus);
+  changeUser(null, null, null)
   res.status(200).json({ message: "Registration successful!" });
 });
 
+APP.get("/api/get-currentUser", (req, res) => {
+  DB.query(
+    "SELECT * FROM tasks WHERE user_id = ?",
+    [currentUser.id],
+    (err, resultsss) => {
+      if (err) console.log(err);
+      changeUser(currentUser.id, currentUser.name, resultsss);
+      res.status(200).json({
+        user: currentUser
+      })
+    }
+  );
+})
+
 //send new task to database
-APP.post('/api/add-task', (req, res) => {
+APP.post("/api/add-task", (req, res) => {
   const query = "INSERT INTO tasks (task, user_id, due_date) VALUES (?, ?, ?)";
   DB.query(query, [req.body.task, currentUser.id, req.body.dueDate], (err) => {
     if (err) console.log(err);
   });
   res.status(200).json({});
-})
+});
 
-//sign-up to current user
-APP.post('/api/sign-up', (req, res) => {
-
+//sign-up to current user and get task, name and id
+APP.post("/api/sign-up", (req, res) => {
   const userName = req.body.user;
   const password = req.body.password;
 
-  DB.query('SELECT * FROM users WHERE name = ? AND password = ?', [userName, password], (err, result) => {
+  DB.query("SELECT * FROM users WHERE name = ?", [userName], (err, results) => {
     if (err) console.log(err);
-    if (result.length > 0) {
-      changeUser(result[0].id, result[0].name);
-      console.log(currentUser);
+    if (results.length > 0) {
+      DB.query(
+        "SELECT * FROM users WHERE name = ? AND password = ?",
+        [userName, password],
+        (err, result) => {
+          if (err) console.log(err);
+          if (result.length > 0) {
+            DB.query(
+              "SELECT * FROM tasks WHERE user_id = ?",
+              [result[0].id],
+              (err, resultsss) => {
+                if (err) console.log(err);
+                changeUser(result[0].id, result[0].name, resultsss);
+                changeLog(true);
+                console.log("SignUp Complete...");
+                res.json({
+                  message: "SignUp Complete...",
+                });
+              }
+            );
+          } else {
+            console.log("Wrong Password...");
+            res.json({
+              message: "Password Invalid...",
+            });
+          }
+        }
+      );
     } else {
       console.log("no username detected...");
+      res.json({
+        message: "Invalid Username...",
+      });
     }
-
-    DB.query('SELECT * FROM tasks WHERE user_id = ?', [result[0].id], (err, res) => {
-      if (err) console.log(err);
-      console.log(res[0]);
-      changeLog(true);
-    });
-
   });
-
 });
 
 APP.listen(PORT, () => {
   console.log("Server is running at PORT: " + PORT);
 });
+

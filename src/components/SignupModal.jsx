@@ -41,14 +41,19 @@ function SignupModal({ onCancel, registerHandler }) {
     }
     
     //send data to backend
-    fetch('/api/sign-up', {
+    await fetch('/api/sign-up', {
       headers: {
         "Content-Type": "application/json"
       },
       method: 'POST',
       mode: 'cors',
       body: JSON.stringify(data)
-    });
+    })
+    .then((response) => {
+      if (response.ok) {
+        window.location.reload();
+      }
+    })
   }
 
   return (
@@ -66,6 +71,7 @@ function SignupModal({ onCancel, registerHandler }) {
             name="username"
             type="text"
             className="border-[#00AAA0] border-[1px] rounded-lg px-2"
+            autoComplete="off"
           />
           <br />
           <label htmlFor="password">Password</label>

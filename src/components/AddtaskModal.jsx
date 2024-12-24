@@ -32,7 +32,10 @@ function AddtaskModal({ onCancel }) {
   function formHandler(event) {
     event.preventDefault();
     const formData = getFormData();
-    const response = fetchData(formData);
+    fetchData(formData)
+    .then(() => {
+      window.location.reload();
+    })
   }
 
   return (

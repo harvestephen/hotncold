@@ -1,8 +1,12 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { SignupModal, RegisterModal } from "./Components";
 import $ from "jquery";
 
 export default function Topbar() {
+
+  const [isLogged, setIsLogged] = useState(false);
+  const [username, setUsername] = useState();
 
   //Set login to true
   async function setLogIn() {
@@ -29,6 +33,8 @@ export default function Topbar() {
     })
     .then((res) =>{
       if (!res.ok) {console.log("Fetch Error...")} 
+      setIsLogged(false);
+      window.location.reload();
     });
   }
 
@@ -50,6 +56,44 @@ export default function Topbar() {
     $("#register").fadeIn(300);
   }
 
+  //function to check if logged in
+  async function checkLog() {
+    const response = await fetch("/api/is-log");
+    if (response.ok) {
+      return response.json();
+    }
+  }
+
+  //function to get current usename
+  async function getUsername() {
+    const response = await fetch('/api/get-currentUser')
+    if (response.ok) {
+      return response.json();
+    }
+  }
+  
+  useEffect(() => {
+    checkLog()
+    .then((result) => {
+      if (result.logStatus === true) {
+        setIsLogged(true);
+      } else {
+        setIsLogged(false);
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    getUsername()
+    .then((result) => {
+      setUsername(result.user.name);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, []);
+
   return (
     <>
       <div className="hidden" id="sign-up">
@@ -67,9 +111,18 @@ export default function Topbar() {
       </div>
 
       <div className="flex justify-end">
+        {isLogged ? 
+        <div>
+          <span className="p-4 text-white capitalize">{username}</span>
+          <button className="p-4 text-white" id="sign-up" onClick={setLogOut}>
+            Sign Out
+          </button> 
+        </div>
+        : 
         <button className="p-4 text-white" id="sign-up" onClick={handlerSignUp}>
           Sign Up
-        </button>
+        </button>}
+        
       </div>
     </>
   );
