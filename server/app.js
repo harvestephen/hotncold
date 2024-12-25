@@ -195,6 +195,26 @@ APP.post("/api/sign-up", (req, res) => {
   });
 });
 
+//update task
+APP.post("/api/update", (req,res) => {
+  const formData = req.body;
+  DB.query('UPDATE tasks SET task = ?, due_date = ? WHERE task_id = ?', [formData.task, formData.date, formData.id], (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+  });
+  res.status(200).json({message: "good job!"})
+})
+
+//delete tasks
+APP.delete('/api/delete-task', (req, res) => {
+  const formData = req.body;
+  DB.query("DELETE FROM tasks WHERE task_id = ?", [formData.id], (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+  });
+  res.status(200).json({});
+});
+
 APP.listen(PORT, () => {
   console.log("Server is running at PORT: " + PORT);
 });
