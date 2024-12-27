@@ -30,3 +30,7 @@ p {
 #banner {
   font-family: inter-bold;
 }
+.red-tile {
+  background-color: #D55B3ECC !important;
+  color: rgb(255, 255, 255);
+}

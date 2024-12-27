@@ -189,12 +189,6 @@ export default function Content() {
           <button className="text-[#00AAA0] font-bold bg-[#D9D9D9] py-1 px-4 rounded-full drop-shadow-lg">
             Task
           </button>
-          <button className="text-[#00AAA0] font-bold bg-[#D9D9D9] py-1 px-4 rounded-full drop-shadow-lg">
-            Important
-          </button>
-          <button className="text-[#D55B3E] font-bold bg-[#D9D9D9] py-1 px-4 rounded-full drop-shadow-lg">
-            Trash
-          </button>
         </div>
         <div className="flex flex-row justify-between max-w-[100rem] w-full">
           <div className="flex-1">
