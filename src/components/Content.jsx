@@ -88,23 +88,26 @@ export default function Content() {
 
   //function to convert task to html
   function mapTasks(array) {
-    let tasks = [];
-    let currentId = null;
-    for (let item of array) {
-      tasks.push(item.task + "   " + item.task_id);
-    }
-    let htmlTask = tasks.map((item) => (
+    console.log(array);
+    let date = new Date();
+    const oneWeekLater = new Date(date);
+    oneWeekLater.setDate(date.getDate() + 7);
+    let htmlTask = array.map((item) => (
       <div className="flex flex-row justify-between max-w-[100rem] w-full bg-[#D9D9D9] rounded-sm px-2 py-2 mb-1">
         <div>
           <input type="checkbox" />
-          <span className="text-sm pl-4">{item.slice(0, -5).trim()}</span>
+          <span className="text-sm pl-4">{item.task}</span>
         </div>
         <div className="flex flex-row gap-3 mr-2">
-          <p className="text-sm bg-[#00AAA0] rounded-full px-2">Cold</p>
+          
+          { 
+            (new Date(item.due_date)) > date && (new Date(item.due_date)) <= oneWeekLater ? <p className="text-sm bg-[#D55B3ECC] rounded-full px-2">Hot</p> : <p className="text-sm bg-[#00AAA0] rounded-full px-2">Cold</p>
+          }
+          
           <button
             className="p-1 bg-[#B6CFCF80] rounded-md h-6"
             onClick={() => {
-              editHandler(item.slice(0, -5).trim(), item.slice(-5).trim());
+              editHandler(item.task, item.task_id);
             }}
           >
             <svg
